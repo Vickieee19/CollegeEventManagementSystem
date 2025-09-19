@@ -1,0 +1,34 @@
+[
+  {
+    "step": "FIX: Address backend JUnit test failures related to status codes, JSON values, and Jackson LocalDate serialization in test cases.",
+    "sub_steps": [
+      "Update backend test configuration to register JavaTimeModule with ObjectMapper for proper LocalDate/LocalDateTime serialization and deserialization.",
+      "Check controller test(s) to ensure MockMvc setup uses a Jackson2ObjectMapperBuilder that has JavaTimeModule registered (or @AutoConfigureMockMvc if already enabled).",
+      "Adjust any test setup that fails due to LocalDate JSON parsing\u2014ensure tests serialize/deserialize dates in 'yyyy-MM-dd' or ISO format.",
+      "Where tests expect specific status codes (201, 400, 404, 409), verify that mock returns from service calls and assertions in test methods are accurate and match the real controller behavior.",
+      "Check that mocked service methods (eventService, registrationService, etc.) return fully formed DTOs or entity objects with all required properties populated for assertions\u2014especially for status and JSON field presence tests.",
+      "Align test mock returns with the controller JSON output: for example, 'eventId' must be set when verifying events, error message values must match 'Event not found', etc.",
+      "If using @WebMvcTest, make sure only service layers are mocked (@MockBean for services, not repositories), and update any tests that may not be triggering the expected controller error signatures (e.g., for validation or not found).",
+      "For validation error assertions, ensure controller and exception handler produce JSON error bodies that match test case expectations (e.g., key 'message', value is expected error string).",
+      "Rebuild and rerun affected JUnit tests to confirm that all controller-layer tests now pass for status code, response structure, and date handling."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/springapp/src/test/java/com/examly/springapp/controller/EventControllerTest.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/springapp/src/test/java/com/examly/springapp/controller/RegistrationControllerTest.java"
+    ],
+    "description": "Directly resolves JUnit failures due to Jackson Java time support and mock setup mismatches. Ensures all backend controller tests serialize/deserialize dates correctly and produce/expect the right JSON and status codes."
+  },
+  {
+    "step": "Compile, build, lint, and test the React frontend.",
+    "sub_steps": [
+      "Run npm install in /reactapp to install dependencies.",
+      "Run npm run build in /reactapp.",
+      "Run npx eslint src/ --fix in /reactapp to auto-fix lint issues.",
+      "Run npm run test:ci in /reactapp and review results for all implemented test cases."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [],
+    "description": "Verifies frontend app builds, lints cleanly, and passes all Jest tests as required."
+  }
+]

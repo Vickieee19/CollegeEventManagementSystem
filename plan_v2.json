@@ -1,0 +1,300 @@
+[
+  {
+    "step": "Read and analyze pom.xml to understand Spring Boot backend dependencies and structure.",
+    "sub_steps": [
+      "Open /home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/springapp/pom.xml.",
+      "Review imported dependencies (web, data-jpa, validation, mysql, lombok).",
+      "Reference application.properties for MySQL configuration.",
+      "Validate there are no unsupported libraries (e.g., H2)."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/springapp/pom.xml",
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/springapp/src/main/resources/application.properties"
+    ],
+    "description": "Ensures all backend tasks leverage the correct Spring, JPA, validation, Lombok, and MySQL dependencies, and understand the environment setup."
+  },
+  {
+    "step": "Implement backend entity classes (Event, Student, Registration) with all required fields, relationships, enums, and validation constraints.",
+    "sub_steps": [
+      "Create Event, Student, Registration entity classes under com.examly.springapp.model.",
+      "Add JPA annotations and relations (OneToMany, ManyToOne).",
+      "Implement validation (e.g., @NotNull, @Email, @Size, positive capacity, enum for category).",
+      "Create EventCategory enum.",
+      "Ensure eventName 5-100 chars, email is valid format, registrationDate is auto-set."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/springapp/src/main/java/com/examly/springapp/model/Event.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/springapp/src/main/java/com/examly/springapp/model/Student.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/springapp/src/main/java/com/examly/springapp/model/Registration.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/springapp/src/main/java/com/examly/springapp/model/EventCategory.java"
+    ],
+    "files_to_edit": [],
+    "description": "Creates data model foundation, ensuring all data-level validation and relationships for test and application logic."
+  },
+  {
+    "step": "Implement backend JPA repository interfaces for Event, Student, and Registration.",
+    "sub_steps": [
+      "Create Spring Data JPA repositories for each entity under com.examly.springapp.repository."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/springapp/src/main/java/com/examly/springapp/repository/EventRepository.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/springapp/src/main/java/com/examly/springapp/repository/StudentRepository.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/springapp/src/main/java/com/examly/springapp/repository/RegistrationRepository.java"
+    ],
+    "files_to_edit": [],
+    "description": "Enables CRUD and custom query operations for each entity as needed for service/controller logic."
+  },
+  {
+    "step": "Implement backend service classes with business logic for Event, Student, and Registration.",
+    "sub_steps": [
+      "EventService: create event (with validation), get all (pagination), get by ID.",
+      "StudentService: find/create students, validate existence.",
+      "RegistrationService: register student for event (with all required constraints), get student registrations.",
+      "Add Capacity, duplicate registration, and not found checks to registration.",
+      "Implement cascade delete logic where necessary."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/springapp/src/main/java/com/examly/springapp/service/EventService.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/springapp/src/main/java/com/examly/springapp/service/StudentService.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/springapp/src/main/java/com/examly/springapp/service/RegistrationService.java"
+    ],
+    "files_to_edit": [],
+    "description": "Encapsulates core application logic, enforces business rules, and prepares data for controllers. Directly supports registration process and entity relationships test cases."
+  },
+  {
+    "step": "Implement backend REST controllers for Event and Registration APIs with proper exception handling.",
+    "sub_steps": [
+      "Create EventController and RegistrationController under com.examly.springapp.controller.",
+      "Implement endpoints: POST /api/events, GET /api/events (pagination), GET /api/events/{id}, POST /api/registrations, GET /api/registrations/students/{studentId}.",
+      "Apply @Valid for input validation and return specified status codes (201, 400, 404, 409, etc.).",
+      "Return error messages as per specs.",
+      "Global exception handler for validation and entity not found errors.",
+      "Implement CORS configuration to allow requests from frontend."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/springapp/src/main/java/com/examly/springapp/controller/EventController.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/springapp/src/main/java/com/examly/springapp/controller/RegistrationController.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4b755fe04a54/springapp/src/main/java/com/examly/springapp/exception/GlobalExceptionHandler.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/springapp/src/main/java/com/examly/springapp/config/CorsConfig.java"
+    ],
+    "files_to_edit": [],
+    "description": "Exposes application logic over REST API, correctly structures responses for frontend, and supports registration, listing, and error cases for integration scenarios."
+  },
+  {
+    "step": "Implement backend test cases as specified in the Test Cases JSON (JUnit).",
+    "sub_steps": [
+      "Test event creation, retrieval (by ID and pagination), validation (various failure modes).",
+      "Test full registration process with all required constraints (duplicate, capacity, not-found).",
+      "Test student registration retrieval, including positive/negative (not found, empty).",
+      "Test entity relationships, registration cascade, and validation constraints.",
+      "Mock service/repository layers as appropriate for controller/service level tests.",
+      "Ensure tests cover both positive and negative scenarios described in provided test case JSON."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/springapp/src/test/java/com/examly/springapp/controller/EventControllerTest.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/springapp/src/test/java/com/examly/springapp/controller/RegistrationControllerTest.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/springapp/src/test/java/com/examly/springapp/model/EntityRelationshipValidationTest.java"
+    ],
+    "files_to_edit": [
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/springapp/src/test/java/com/examly/springapp/CollegeEventManagementSystemApplicationTests.java"
+    ],
+    "description": "Implements all backend test cases: event creation, retrieval, validation, registration flow, relationships, and validation errors, using mocks as needed for isolation."
+  },
+  {
+    "step": "Read and analyze package.json to understand React frontend dependencies and structure.",
+    "sub_steps": [
+      "Open /home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/reactapp/package.json.",
+      "Review dependencies (React, Axios, React Router, Testing Library).",
+      "Check for any requirements for style loaders or CSS processors.",
+      "Assess src directory structure (components, utils, index.js)."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/reactapp/package.json",
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4b755fe04a54/reactapp/src/index.js"
+    ],
+    "description": "Prepares agent for React app setup, ensuring use of correct libraries and file structure for frontend implementation."
+  },
+  {
+    "step": "Implement React utility files for API integration, constants, and helpers.",
+    "sub_steps": [
+      "Create api.js for API requests with Axios to backend endpoints (set base URL).",
+      "Create constants.js for event categories, route paths.",
+      "Create helpers.js for data formatting if needed (dates, times)."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4b755fe04a54/reactapp/src/utils/api.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4b755fe04a54/reactapp/src/utils/constants.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4b755fe04a54/reactapp/src/utils/helpers.js"
+    ],
+    "files_to_edit": [],
+    "description": "Centralizes API logic, constants, and formatting for reuse across components and simplifies mocking in tests."
+  },
+  {
+    "step": "Implement Event Listing Page as EventList component, including filtering, loading, error, and category dropdown.",
+    "sub_steps": [
+      "Create EventList.js under components.",
+      "Use Axios helper to fetch events with pagination and implement useEffect/useState for data & loading.",
+      "Render event cards with eventName, date, venue, category.",
+      "Implement filter dropdown for categories (ALL and each type).",
+      "Handle API errors & failures (display error message from API).",
+      "Each event card has 'View Details' button (navigates appropriately)."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/reactapp/src/components/EventList.js"
+    ],
+    "files_to_edit": [],
+    "description": "Provides event browsing UI and filtering, and supports multiple test cases covering listing, filtering, and navigation."
+  },
+  {
+    "step": "Create tests for EventList component as per provided frontend test cases.",
+    "sub_steps": [
+      "Test listing of events with various categories.",
+      "Test filtering dropdown and state maintenance.",
+      "Mock API calls to return event list/error using Jest.",
+      "Test loading indicator and error messages.",
+      "Test 'View Details' button functionality and routing.",
+      "Use data-testid for selectors to assure test reliability."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/reactapp/src/components/EventList.test.js"
+    ],
+    "files_to_edit": [
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/reactapp/src/components/EventList.js"
+    ],
+    "description": "Implements tests for event listing, filtering, loading, errors, and navigation, strictly following provided Jest test case JSON."
+  },
+  {
+    "step": "Implement EventDetails component to show event info, registration UI, and feedback.",
+    "sub_steps": [
+      "Create EventDetails.js under components.",
+      "Fetch event data (by eventId param) and registration count.",
+      "Display all required fields (name, description, date, time, venue, capacity, etc.).",
+      "Show available spots, disable register if full.",
+      "Implement registration form (studentId input), submit to API.",
+      "Show success/error messages as per backend result."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4e25-9498-4b755fe04a54/reactapp/src/components/EventDetails.js"
+    ],
+    "files_to_edit": [],
+    "description": "Allows students to view and register for events, implements capacity and duplicate preventions, appropriately handling all backend errors and success."
+  },
+  {
+    "step": "Create tests for EventDetails component as per provided frontend test cases.",
+    "sub_steps": [
+      "Test detailed event display, including all fields.",
+      "Test available spots and registration count logic.",
+      "Mock registration API and event details API.",
+      "Test register button disable/enable states.",
+      "Test UI feedback for success/failure in registration.",
+      "Test error message display for all relevant scenarios."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4b755fe04a54/reactapp/src/components/EventDetails.test.js"
+    ],
+    "files_to_edit": [
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4b755fe04a54/reactapp/src/components/EventDetails.js"
+    ],
+    "description": "Implements full test coverage for event details and registration, including positive and negative outcomes, including all expected UI and API behaviors per Jest cases."
+  },
+  {
+    "step": "Implement StudentDashboard component for listing student registrations.",
+    "sub_steps": [
+      "Create StudentDashboard.js under components.",
+      "Implement form to enter studentId and fetch all registrations for student.",
+      "Display list of events student registered for, with details.",
+      "Handle no registrations and not found cases.",
+      "Implement UI for error/no data conditions."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4b755fe04a54/reactapp/src/components/StudentDashboard.js"
+    ],
+    "files_to_edit": [],
+    "description": "Allows student to see all their event registrations and gracefully handles cases of empty/invalid input, missing students, and errors."
+  },
+  {
+    "step": "Create tests for StudentDashboard component as per provided frontend test cases.",
+    "sub_steps": [
+      "Test input form for studentId and submitting.",
+      "Mock API for various cases: successful registrations, no registrations, API error, student not found.",
+      "Test all UI states: registration list, no registrations, and errors.",
+      "Use data-testid for selectors to support all assertions robustly."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4b755fe04a54/reactapp/src/components/StudentDashboard.test.js"
+    ],
+    "files_to_edit": [
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4b755fe04a54/reactapp/src/components/StudentDashboard.js"
+    ],
+    "description": "Implements tests for dashboard logic, form interactions, empty states, and error handling for comprehensive test coverage per Jest cases."
+  },
+  {
+    "step": "Implement navigation, routing, and styling for entire frontend with App.js, navigation bar, routes, and CSS.",
+    "sub_steps": [
+      "Create Navbar.js for top navigation bar (links to /, /dashboard, etc).",
+      "Update App.js to integrate React Router and component routes as per requirements.",
+      "Set up and style navigation bar with links.",
+      "Ensure all routes ('/', '/events/:eventId', '/dashboard') render correct components and can be navigated to by links and programmatic navigation.",
+      "Create or update App.css to reflect design (layout, buttons, form, error, loading styles) using CSS variables and spacing per spec."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4b755fe04a54/reactapp/src/components/Navbar.js"
+    ],
+    "files_to_edit": [
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4b755fe04a54/reactapp/src/App.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4b755fe04a54/reactapp/src/App.css"
+    ],
+    "description": "Sets up routing for all pages, provides user-friendly navigation, and applies required styling to meet usability and aesthetics requirements."
+  },
+  {
+    "step": "Create tests for navigation and routing as per provided frontend test cases.",
+    "sub_steps": [
+      "Test rendering of navigation bar and all route links.",
+      "Test navigation by clicking links - ensures correct component is rendered.",
+      "Test usage of route params (eventId) for event details.",
+      "Use memory history where necessary for testing routing.",
+      "Verify navigation structure matches requirements of UI and routes."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4b755fe04a54/reactapp/src/App.test.js"
+    ],
+    "files_to_edit": [
+      "/home/coder/project/workspace/question_generation_service/solutions/41dfe1e9-c64a-4b755fe04a54/reactapp/src/App.js"
+    ],
+    "description": "Implements Jest test coverage for React Router navigation, link rendering, route-based component rendering, supporting robust multi-page navigation scenarios."
+  },
+  {
+    "step": "Compile and build the Spring Boot backend.",
+    "sub_steps": [
+      "Run mvn clean compile -q -Dspring.main.banner-mode=off in /springapp.",
+      "Check for compilation errors."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [],
+    "description": "Ensures all backend application code compiles and is ready for testing."
+  },
+  {
+    "step": "Run backend JUnit test cases for validation.",
+    "sub_steps": [
+      "Run mvn test -q -Dspring.main.banner-mode=off in /springapp.",
+      "Review results and fix any failing test cases."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [],
+    "description": "Executes all backend tests to confirm correctness of Spring Boot logic and API endpoints."
+  },
+  {
+    "step": "Compile, build, lint, and test the React frontend.",
+    "sub_steps": [
+      "Run npm install in /reactapp to install dependencies.",
+      "Run npm run build in /reactapp.",
+      "Run npx eslint src/ --fix in /reactapp to auto-fix lint issues.",
+      "Run npm run test:ci in /reactapp and review results for all implemented test cases."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [],
+    "description": "Verifies frontend app builds, lints cleanly, and passes all Jest tests as required."
+  }
+]
