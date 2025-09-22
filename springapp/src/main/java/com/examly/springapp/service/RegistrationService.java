@@ -32,7 +32,7 @@ public class RegistrationService {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new ValidationException("Event not found"));
 
-        List<Registration> existing = registrationRepository.findByStudent_StudentId(studentId);
+        List<Registration> existing = registrationRepository.findByStudent(student);
         if (existing.stream().anyMatch(r -> r.getEvent().getEventId().equals(eventId))) {
             throw new DataIntegrityViolationException("Student already registered for this event");
         }
@@ -56,9 +56,8 @@ public class RegistrationService {
     }
 
     public List<Registration> getStudentRegistrations(String studentId) {
-        if (!studentRepository.existsById(studentId)) {
-            throw new ValidationException("Student not found");
+        Student student = studentRepository.findById(studentId)
+            .orElseThrow(()-> new ValidationException("Student not found"));
+            return registrationRepository.findByStudent(student);
         }
-        return registrationRepository.findByStudent_StudentId(studentId);
-    }
 }
