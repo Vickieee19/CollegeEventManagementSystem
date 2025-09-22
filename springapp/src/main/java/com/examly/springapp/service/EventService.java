@@ -1,6 +1,5 @@
 package com.examly.springapp.service;
 
-import com.examly.springapp.exception.ResourceNotFoundException;
 import com.examly.springapp.model.Event;
 import com.examly.springapp.repository.EventRepository;
 import jakarta.validation.ValidationException;

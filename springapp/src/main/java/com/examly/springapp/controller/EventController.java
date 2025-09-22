@@ -3,7 +3,6 @@ package com.examly.springapp.controller;
 import com.examly.springapp.exception.ResourceNotFoundException;
 import com.examly.springapp.model.Event;
 import com.examly.springapp.service.EventService;
-import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;

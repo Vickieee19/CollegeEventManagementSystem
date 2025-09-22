@@ -34,16 +34,16 @@ public class EntityRelationshipValidationTest {
                 .category(EventCategory.CULTURAL).build();
         Event ev = eventRepository.save(e);
 
-        Registration reg = Registration.builder().student(s).event(ev).registrationDate(LocalDateTime.now()).attended(false).build();
-        registrationRepository.save(reg);
+    Registration reg = Registration.builder().student(s).event(ev).registrationDate(LocalDateTime.now()).attended(false).build();
+    registrationRepository.save(reg);
 
-        List<Registration> regs = registrationRepository.findByStudent(s);
+    List<Registration> regs = registrationRepository.findByStudent_StudentId(s.getStudentId());
         assertFalse(regs.isEmpty());
         assertEquals(1, regs.size());
         assertEquals(s.getStudentId(), regs.get(0).getStudent().getStudentId());
 
-        // On delete cascade
-        registrationRepository.delete(reg);
-        assertTrue(registrationRepository.findByStudent(s).isEmpty());
+    // On delete cascade (or orphan removal)
+    registrationRepository.delete(reg);
+    assertTrue(registrationRepository.findByStudent_StudentId(s.getStudentId()).isEmpty());
     }
 }
