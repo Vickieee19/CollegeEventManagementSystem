@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,5 +32,17 @@ public class EventService {
 
     public Optional<Event> getEventById(Long id) {
         return eventRepository.findById(id);
+    }
+
+    public long getTotalEventCount() {
+        return eventRepository.count();
+    }
+
+    public List<Event> getAllEvents() {
+        return eventRepository.findAll();
+    }
+
+    public void deleteEvent(Long id) {
+        eventRepository.deleteById(id);
     }
 }

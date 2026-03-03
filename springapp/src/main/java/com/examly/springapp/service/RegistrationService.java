@@ -2,9 +2,11 @@ package com.examly.springapp.service;
 
 import com.examly.springapp.model.Event;
 import com.examly.springapp.model.Registration;
+import com.examly.springapp.model.EventRegistration;
 import com.examly.springapp.model.Student;
 import com.examly.springapp.repository.EventRepository;
 import com.examly.springapp.repository.RegistrationRepository;
+import com.examly.springapp.repository.EventRegistrationRepository;
 import com.examly.springapp.repository.StudentRepository;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ import java.util.List;
 public class RegistrationService {
     @Autowired
     private RegistrationRepository registrationRepository;
+    
+    @Autowired
+    private EventRegistrationRepository eventRegistrationRepository;
 
     @Autowired
     private StudentRepository studentRepository;
@@ -60,4 +65,16 @@ public class RegistrationService {
             .orElseThrow(()-> new ValidationException("Student not found"));
             return registrationRepository.findByStudent(student);
         }
+
+    public long getTotalRegistrationCount() {
+        return registrationRepository.count();
+    }
+
+    public List<Registration> getAllRegistrations() {
+        return registrationRepository.findAll();
+    }
+    
+    public List<EventRegistration> getAllEventRegistrations() {
+        return eventRegistrationRepository.findAll();
+    }
 }

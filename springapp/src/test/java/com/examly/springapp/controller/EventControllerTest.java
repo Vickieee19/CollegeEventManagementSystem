@@ -3,6 +3,9 @@ package com.examly.springapp.controller;
 import com.examly.springapp.model.Event;
 import com.examly.springapp.model.EventCategory;
 import com.examly.springapp.service.EventService;
+import com.examly.springapp.security.JwtUtil;
+import com.examly.springapp.security.JwtAuthenticationFilter;
+import com.examly.springapp.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,6 +20,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -36,6 +40,15 @@ public class EventControllerTest {
 
     @MockBean
     private EventService eventService;
+    
+    @MockBean
+    private JwtUtil jwtUtil;
+    
+    @MockBean
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
+    
+    @MockBean
+    private UserService userService;
 
     // Ensure consistent JavaTimeModule registration
     private ObjectMapper mapper;
@@ -58,6 +71,7 @@ public class EventControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void testCreateEventSuccess() throws Exception {
         Event eventToCreate = testEvent;
         when(eventService.createEvent(any(Event.class))).thenReturn(eventToCreate);
@@ -69,6 +83,7 @@ public class EventControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void testCreateEventValidationError() throws Exception {
         // Attempt to create an event with short name to trigger validation
         Event badEvent = Event.builder()
@@ -90,6 +105,7 @@ public class EventControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void testGetAllEventsReturnsPagination() throws Exception {
         List<Event> events = Arrays.asList(testEvent);
         Page<Event> page = new PageImpl<>(events, PageRequest.of(0, 10), events.size());
@@ -100,6 +116,7 @@ public class EventControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void testGetEventByIdFound() throws Exception {
         when(eventService.getEventById(anyLong())).thenReturn(Optional.of(testEvent));
         mockMvc.perform(get("/api/events/1"))
@@ -108,6 +125,7 @@ public class EventControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void testGetEventByIdNotFound() throws Exception {
         when(eventService.getEventById(anyLong())).thenReturn(Optional.empty());
         mockMvc.perform(get("/api/events/99"))

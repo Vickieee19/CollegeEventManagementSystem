@@ -34,7 +34,14 @@ public class Event {
 
     @Min(value = 1, message = "Capacity must be positive")
     private int capacity;
+    
+    @Builder.Default
+    private int registeredCount = 0;
 
     @Enumerated(EnumType.STRING)
     private EventCategory category;
+    
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private EventStatus status = EventStatus.ACTIVE;
 }
